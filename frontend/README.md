@@ -1,48 +1,138 @@
-# React + Vite
+# React Vite Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application bootstrapped with Vite.js for lightning-fast development and optimal production builds.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⚡️ Lightning Fast HMR (Hot Module Replacement)
+- 🎨 Built-in ESLint & Prettier configuration
+- 📱 Responsive design ready
+- 🔧 TypeScript support
+- 📦 Optimized production builds
 
-# WebApp Project
+## 🛠️ Prerequisites
 
-This is a full-stack web application that includes a **Flask** backend and a **React** frontend (using Vite). The app allows for managing events, with separate interfaces for organizers and attendees.
+Before you begin, ensure you have the following installed:
 
-## Table of Contents
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Backend Setup (Flask)](#backend-setup-flask)
-- [Frontend Setup (React with Vite)](#frontend-setup-react-with-vite)
-- [Running the Application](#running-the-application)
-- [API Endpoints](#api-endpoints)
-- [Folder Structure](#folder-structure)
+- Node.js (version 14.18+ or 16+)
+- npm or yarn or pnpm
 
-## Features
-- Event management for organizers (create, edit, delete events).
-- Event browsing for attendees (view events, search by criteria).
-- Secure RESTful API for communication between the backend and frontend.
-- State management using Redux in the frontend.
+## 🏗️ Installation
 
-## Tech Stack
-- **Frontend**: React, Vite, Redux Toolkit
-- **Backend**: Flask, SQLAlchemy, SQLite (or other DB of choice)
-- **Styling**: Tailwind CSS (optional, based on your project requirements)
-- **API Communication**: RESTful API, JSON-based communication
-- **Tooling**: Node.js, Python, Git, CORS
+1. Clone the repository:
 
-## Getting Started
+```bash
+git clone https://github.com/nxveeen/EventAura-FullStack/frontend
+```
 
-### Prerequisites
-- Node.js and npm installed (for the frontend)
-- Python 3.x installed (for the backend)
-- Virtual environment for Python (optional but recommended)
+2. Install dependencies:
 
-### Backend Setup (Flask)
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
+```
 
-1. **Navigate to the Backend Folder** (if applicable):
-   ```bash
-   cd backend
+## 📝 Available Scripts
+
+In the project directory, you can run:
+
+### Development
+
+```bash
+npm run dev
+```
+
+Runs the app in development mode.\
+Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
+
+### Build
+
+```bash
+npm run build
+```
+
+Builds the app for production to the `dist` folder.
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+Locally preview the production build.
+
+### Lint
+
+```bash
+npm run lint
+```
+
+Run ESLint to analyze and fix code issues.
+
+## 📁 Project Structure
+
+```
+your-project-name/
+├── public/             # Static files
+├── src/
+│   ├── assets/        # Images, fonts, etc.
+│   ├── components/    # Reusable components
+│   ├── pages/         # Page components
+│   ├── store/         # Redux Store
+│   ├── App.jsx        # Root component
+│   └── main.jsx       # Entry point
+├── index.html
+├── package.json
+├── jsconfig.json      # JavaScript configuration
+├── tailwind.config.json      # Taiwind configuration
+├── vite.config.ts     # Vite configuration
+└── README.md
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_API_URL=your_api_url_here
+```
+
+Access variables in your code:
+
+```javascript
+console.log(import.meta.env.VITE_API_URL);
+```
+
+## 📚 Tech Stack
+
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+
+## 🤝 Contributing
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## 👥 Authors
+
+- Your Name - [GitHub Profile](https://github.com/nxveeen)
+
+## 🙏 Acknowledgments
+
+- [Vite.js](https://vitejs.dev/) for the amazing build tool
+- [React](https://reactjs.org/) for the fantastic library
