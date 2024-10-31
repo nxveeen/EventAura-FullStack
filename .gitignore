@@ -1,0 +1,76 @@
+# Node modules (React frontend)
+**/node_modules/
+
+# Build output (React Vite)
+dist/
+.vite/
+
+# Dependency directories
+**/build/
+**/public/
+
+# Log files
+*.log
+*.log.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.sqlite3
+
+# Flask environment
+instance/
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+venv/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+*.coveragerc
+*.py,cover
+
+# Flask specific
+*.egg-info/
+*.egg/
+celerybeat-schedule
+__pycache__/
+.cache/
+.mypy_cache/
+.pytest_cache/
+
+# Ignore database files
+*.db
+*.sqlite3
+
+# Compiled files
+*.so
+
+# Test outputs
+.tox/
+noxfile
+test_output/
+
+# Miscellaneous
+.vscode/
+.idea/
