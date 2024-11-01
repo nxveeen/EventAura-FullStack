@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const BASE_URL = "http://127.0.0.1:5000/events";
+const BASE_URL = "http://127.0.0.1:5000/events/all";
 
 const initialState = {
   events: [],
@@ -16,7 +16,9 @@ export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
     throw new Error("Failed to fetch events.");
   }
   const data = await res.json();
-  return data;
+  // console.log(data.events);
+
+  return data.events;
 });
 
 // Get single event by ID from API

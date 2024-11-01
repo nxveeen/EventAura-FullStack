@@ -32,7 +32,7 @@ const MainNavigation = () => {
           </li>
           <li className="mx-2">
             <NavLink
-              to="login"
+              to="auth?mode=login"
               className={({ isActive }) => (isActive ? "underline" : undefined)}
             >
               Login

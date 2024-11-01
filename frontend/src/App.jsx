@@ -8,6 +8,7 @@ import EventsPage from "./pages/EventsPage";
 import EventDetails from "./pages/EventDetails";
 import NewEvent from "./pages/NewEvent";
 import EventEdit from "./pages/EventEdit";
+import LoginPage from "./pages/auth/LoginPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -18,10 +19,10 @@ function App() {
       children: [
         { index: true, element: <HomePage /> },
         { path: "about", element: <AboutPage /> },
+        { path: "auth", element: <LoginPage /> },
         {
           path: "events",
           element: <EventsPage />,
-          loader: eventLoader,
           children: [
             { path: ":eventid", element: <EventDetails /> },
             { path: "new", element: <NewEvent /> },
@@ -43,9 +44,3 @@ function App() {
 }
 
 export default App;
-
-const eventLoader = async () => {
-  const res = await fetch("http://127.0.0.1:5000/events");
-  const data = await res.json();
-  return data;
-};
