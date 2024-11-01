@@ -2,10 +2,12 @@ from flask import Flask
 from flask_cors import CORS
 from extensions import db, jwt 
 from auth import auth_bp
+from users import users_bp
+from events import events_bp
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, origins=["http://localhost:5173"])
 
     app.config.from_prefixed_env(prefix="APP")  
 
@@ -13,13 +15,15 @@ def create_app():
         # initialize app
         db.init_app(app)
         jwt.init_app(app)
-        
+
         # create database if not present
         with app.app_context():
             db.create_all()
 
         # register blueprints
         app.register_blueprint(auth_bp, url_prefix="/auth")
+        app.register_blueprint(users_bp, url_prefix="/users")
+        app.register_blueprint(events_bp, url_prefix="/events")
 
 
     except Exception as e:

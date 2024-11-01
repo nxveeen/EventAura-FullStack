@@ -7,32 +7,39 @@ auth_bp = Blueprint("auth", __name__)
 @auth_bp.post("/register")
 def register_user():
     data = request.get_json()
-    user = User.get_user_by_username(username = data.get("username", None))
+    user = User.get_user_by_username(username = data.get("username"))
     if user is not None:
-        return jsonify({"error ": "user already exists"}), 409
+        return jsonify({"success": False, "error": "User already exists"}), 409
 
     new_user = User(
-        username = data.get("username",None),
-        email = data.get("email", None)
+        username = data.get("username"),
+        email = data.get("email")
     )
 
-    new_user.set_password(password = data.get("password",None))
+    new_user.set_password(password = data.get("password"))
     new_user.save()
 
-    return jsonify({"message ": "user created"}), 201
+    return  jsonify({"success": True, "message": "User created"}), 409
 
 
 @auth_bp.post("/login")
 def user_login():
     data = request.get_json()
-    user  = User.get_user_by_username(username = data.get("username"))
+    print(data)
+    user  = User.get_user_by_email(email=  data.get("email"))
 
     if user and user.check_password(password = data.get("password")):
-        access_token = create_access_token(identity = user.username)
+        access_token = create_access_token(identity = user.username )
         refresh_token = create_refresh_token(identity=user.username)
 
         return jsonify({
-            "message": "logged in",
+            "success": True,
+            "message": "Logged in successfully",
+            "user":{
+                "id": user.id,
+                "username": user.username,
+                "email": user.email
+            },
             "tokens": {
                 "access": access_token,
                 "refresh": refresh_token,
