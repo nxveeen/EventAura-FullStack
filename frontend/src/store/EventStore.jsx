@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const BASE_URL = "http://127.0.0.1:5000/events/all";
+const BASE_URL = "http://127.0.0.1:5000/events";
 
 const initialState = {
   events: [],
@@ -11,14 +11,22 @@ const initialState = {
 
 // Get all events from API
 export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
-  const res = await fetch(BASE_URL);
+  const authToken = "Bearer " + localStorage.getItem("authToken");
+
+  const res = await fetch(BASE_URL + "/all", {
+    method: "GET",
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json",
+    },
+  });
+
   if (!res.ok) {
     throw new Error("Failed to fetch events.");
   }
-  const data = await res.json();
-  // console.log(data.events);
 
-  return data.events;
+  const data = await res.json();
+  return data;
 });
 
 // Get single event by ID from API
@@ -26,9 +34,11 @@ export const fetchEventById = createAsyncThunk(
   "events/fetchEventById",
   async (id) => {
     const res = await fetch(`${BASE_URL}/${id}`);
+
     if (!res.ok) {
       throw new Error("Failed to fetch event by ID.");
     }
+
     const data = await res.json();
     return data;
   }
@@ -38,18 +48,22 @@ export const fetchEventById = createAsyncThunk(
 export const uploadEvent = createAsyncThunk(
   "events/uploadEvent",
   async (newEvent) => {
-    const res = await fetch(BASE_URL, {
+    const authToken = "Bearer " + localStorage.getItem("authToken");
+
+    const res = await fetch(BASE_URL + "/add", {
       method: "POST",
       headers: {
+        Authorization: authToken,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newEvent),
     });
+
     if (!res.ok) {
       throw new Error("Failed to upload new event.");
     }
-    const data = await res.json();
 
+    const data = await res.json();
     return data;
   }
 );
@@ -65,7 +79,7 @@ const eventSlice = createSlice({
       })
       .addCase(fetchEvents.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.events = action.payload;
+        state.events = action.payload.events;
       })
       .addCase(fetchEvents.rejected, (state, action) => {
         state.status = "failed";
@@ -79,12 +93,13 @@ const eventSlice = createSlice({
       })
       .addCase(uploadEvent.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.events.push(action.payload);
+        state.events.push(action.payload.event);
       })
       .addCase(uploadEvent.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      });
+      })
+      .addCase("RESET", () => initialState); // Reset State after logout
   },
 });
 

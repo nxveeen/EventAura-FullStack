@@ -1,15 +1,23 @@
-import React, { useState } from "react";
-import { useSearchParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
+import { loginUser, getUserAuthenticated } from "../../store/AuthStore";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isLogin = searchParams.get("mode") === "login";
+  const isAuthenticated = useSelector(getUserAuthenticated);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const credentials = { email: email, password: password };
+    console.log(credentials);
+    dispatch(loginUser(credentials));
+    navigate("/");
   };
 
   return (

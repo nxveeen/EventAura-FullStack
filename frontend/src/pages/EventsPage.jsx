@@ -7,6 +7,7 @@ import {
   getEventError,
   fetchEvents,
 } from "../store/EventStore";
+import { getUserAuthenticated } from "../store/AuthStore";
 
 const EventsPage = () => {
   const dispatch = useDispatch();
@@ -15,14 +16,17 @@ const EventsPage = () => {
   const eventsStatus = useSelector(getEventStatus);
   const eventsError = useSelector(getEventError);
 
+  const isLoggedin = useSelector(getUserAuthenticated);
+
+  // console.log(events);
+
   useEffect(() => {
-    if (eventsStatus === "idle") {
+    if (eventsStatus === "idle" && isLoggedin) {
       dispatch(fetchEvents());
     }
-  }, [eventsStatus, dispatch]);
+  }, [eventsStatus, dispatch, isLoggedin]);
 
   function handleDeleteEvent(id) {
-    // Handle delete event logic
     console.log(id);
   }
 
