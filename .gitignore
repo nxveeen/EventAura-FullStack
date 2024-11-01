@@ -28,6 +28,7 @@ instance/
 *.pyd
 db.sqlite3
 venv/
+.venv
 .env
 .env.local
 .env.development.local
