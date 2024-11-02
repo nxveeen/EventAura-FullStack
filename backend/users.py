@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 users_bp = Blueprint("users", __name__)
 
 @users_bp.get("/all")
-# @jwt_required()
+@jwt_required()
 def get_all_users():
     page = request.args.get("page", default=1, type=int)
     per_page = request.args.get("per_page", default=10, type=int)
