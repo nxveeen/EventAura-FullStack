@@ -12,10 +12,12 @@ import { getUserAuthenticated } from "../store/AuthStore";
 const EventsPage = () => {
   const dispatch = useDispatch();
 
+  // event redux variables
   const events = useSelector(getAllEvents);
   const eventsStatus = useSelector(getEventStatus);
   const eventsError = useSelector(getEventError);
 
+  // auth redux variables
   const isLoggedin = useSelector(getUserAuthenticated);
 
   // console.log(events);

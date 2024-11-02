@@ -1,16 +1,22 @@
-import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+// Import the layouts
+import RootLayout from "./layouts/RootLayout";
+
+// import components
+import NewEvent from "./components/NewEvent";
+import EventEdit from "./components/EventEdit";
+
+// Import the routes
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
-import RootLayout from "./pages/RootLayout";
 import ErrorPage from "./pages/ErrorPage";
 import EventsPage from "./pages/EventsPage";
 import EventDetails from "./pages/EventDetails";
-import NewEvent from "./pages/NewEvent";
-import EventEdit from "./pages/EventEdit";
 import LoginPage from "./pages/auth/LoginPage";
 
 function App() {
+  // react-router object for routing
   const router = createBrowserRouter([
     {
       path: "/",

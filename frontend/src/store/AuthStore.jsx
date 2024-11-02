@@ -6,7 +6,7 @@ const initialState = {
   user: null,
   token: null,
   isAuthenticated: false,
-  loading: false,
+  loading: null,
   error: null,
 };
 
@@ -16,7 +16,11 @@ const initialState = {
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
+
   async (credentials) => {
+    // augmented delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // ----
     try {
       const res = await fetch(BASE_URL + "/login", {
         method: "POST",
@@ -35,6 +39,25 @@ export const loginUser = createAsyncThunk(
       return data; // This will be the payload for login.fulfilled
     } catch (error) {
       return rejectWithValue(error.message); // Passes the error message to login.rejected
+    }
+  }
+);
+
+export const registerUser = createAsyncThunk(
+  "auth/registerUser",
+  async (credentials) => {
+    try {
+      const res = fetch(BASE_URL + "/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );

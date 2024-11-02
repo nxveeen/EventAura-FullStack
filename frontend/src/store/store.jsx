@@ -16,7 +16,6 @@ const rootReducer = (state, action) => {
   return combinedReducer(state, action);
 };
 
-// Configure the store with the root reducer
 export default configureStore({
   reducer: rootReducer,
 });

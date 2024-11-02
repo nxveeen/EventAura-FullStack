@@ -19,7 +19,7 @@ def register_user():
     new_user.set_password(password = data.get("password"))
     new_user.save()
 
-    return  jsonify({"success": True, "message": "User created"}), 409
+    return  jsonify({"success": True, "message": "User created", "user": new_user}), 201
 
 
 @auth_bp.post("/login")
