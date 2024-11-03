@@ -75,6 +75,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // add case for loginUser
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -90,6 +91,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      // add case for registerUser
       .addCase("RESET", () => initialState); // Reset state after logout
   },
 });
