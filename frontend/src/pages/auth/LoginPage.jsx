@@ -3,14 +3,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { loginUser, registerUser, getUserLoading } from "../../store/AuthStore";
 import { Eye, EyeOff } from "lucide-react";
+import FormInput from "../../components/FormInput";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(null);
+  const initialInputState = {
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  };
+  const initialErrorState = {
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  };
+
+  // const [passwordError, setPasswordError] = useState(null);
   const [showPasswords, setShowPasswords] = useState(false);
+  const [input, setInput] = useState(initialInputState);
+  const [error, setError] = useState(initialErrorState);
 
   // router hooks
   const [searchParams] = useSearchParams();
@@ -23,38 +35,85 @@ const LoginPage = () => {
   //user state
   const userIsLoading = useSelector(getUserLoading);
 
-  // Validate passwords match
-  const validatePasswords = () => {
-    const trimmedPassword = password.trim();
-    const trimmedConfirmPassword = confirmPassword.trim();
-    console.log("checking");
+  const onInputChange = (e) => {
+    const { id, value } = e.target;
+    // console.log(id, value);
 
-    if (!isLogin && trimmedPassword !== trimmedConfirmPassword) {
-      setPasswordError(true);
-      return false;
-    }
-    setPasswordError(false);
-    return true;
+    setInput((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+    validateInput(e);
+  };
+
+  const validateInput = (e) => {
+    let { id, value } = e.target;
+    // console.log(error);
+
+    setError((prev) => {
+      const stateObj = { ...prev, [id]: "" };
+
+      switch (id) {
+        case "email":
+          if (!value) {
+            stateObj[id] = "Please enter Email.";
+            stateObj.all = false;
+          }
+          break;
+
+        case "username":
+          if (!value) {
+            stateObj[id] = "Please enter Username.";
+          }
+          break;
+
+        case "password":
+          if (!value) {
+            stateObj[id] = "Please enter Password.";
+          } else if (input.confirmPassword && value !== input.confirmPassword) {
+            stateObj["confirmPassword"] =
+              "Password and Confirm Password does not match.";
+          } else {
+            stateObj["confirmPassword"] = input.confirmPassword
+              ? ""
+              : error.confirmPassword;
+          }
+          break;
+
+        case "confirmPassword":
+          if (!value) {
+            stateObj[id] = "Please enter Confirm Password.";
+          } else if (input.password && value !== input.password) {
+            stateObj[id] = "Password and Confirm Password does not match.";
+          }
+          break;
+
+        default:
+          break;
+      }
+
+      return stateObj;
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     // For signup, validate passwords match before submission
-    if (!isLogin && validatePasswords()) {
+    if (!isLogin && error.all === false) {
       return;
     }
 
     const credentials = {
-      email: email,
-      password: password,
+      email: input.email,
+      password: input.password,
     };
     if (isLogin) {
       dispatch(loginUser(credentials));
     } else {
-      console.log({ ...credentials, username: username });
+      // console.log({ ...credentials, username: input.username });
 
-      dispatch(registerUser({ ...credentials, username: username }));
+      dispatch(registerUser({ ...credentials, username: input.username }));
+      navigate("/");
     }
   };
 
@@ -63,20 +122,6 @@ const LoginPage = () => {
 
     if (userIsLoading === false) navigate("/");
   }, [navigate, userIsLoading]);
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    if (!isLogin) {
-      validatePasswords();
-    }
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-    if (!isLogin) {
-      validatePasswords();
-    }
-  };
 
   return (
     <div className="flex justify-center items-center mt-16">
@@ -95,11 +140,13 @@ const LoginPage = () => {
             <input
               type="email"
               id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={input.email}
+              onChange={onInputChange}
+              onBlur={validateInput}
               required
               className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
             />
+            {error.email && <span className="text-red-500">{error.email}</span>}
           </div>
           <div>
             <label
@@ -111,13 +158,15 @@ const LoginPage = () => {
             <input
               type={showPasswords ? "text" : "password"}
               id="password"
-              value={password}
+              value={input.password}
+              onChange={onInputChange}
+              onBlur={validateInput}
               required
-              onChange={(e) => {
-                handlePasswordChange(e);
-              }}
               className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
             />
+            {error.password && (
+              <span className="text-red-500">{error.password}</span>
+            )}
           </div>
           {!isLogin && (
             <div>
@@ -130,16 +179,15 @@ const LoginPage = () => {
               <input
                 type={showPasswords ? "text" : "password"}
                 id="confirmPassword"
-                value={confirmPassword}
+                value={input.confirmPassword}
+                onChange={onInputChange}
+                onBlur={validateInput}
                 required
-                onChange={(e) => {
-                  handleConfirmPasswordChange(e);
-                }}
                 className="w-full p-3 border rounded-md focus:ring-2 focus:ring-green-500"
               />
-              <p className="text-red-500 text-sm mt-1">
-                {passwordError && "password do not match"}
-              </p>
+              {error.confirmPassword && (
+                <span className="text-red-500">{error.confirmPassword}</span>
+              )}
             </div>
           )}
           {!isLogin && (
@@ -153,11 +201,15 @@ const LoginPage = () => {
               <input
                 type="text"
                 id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={input.username}
+                onChange={onInputChange}
+                onBlur={validateInput}
                 required
                 className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
               />
+              {error.username && (
+                <span className="text-red-500">{error.username}</span>
+              )}
             </div>
           )}
 
@@ -184,7 +236,15 @@ const LoginPage = () => {
             <button
               type="submit"
               className="w-full py-3 font-bold rounded-lg bg-blue-500 text-white"
-              disabled={!isLogin && passwordError}
+              disabled={
+                !isLogin &&
+                !(
+                  error.username === "" &&
+                  error.email === "" &&
+                  error.password === "" &&
+                  error.confirmPassword === ""
+                )
+              }
             >
               {isLogin
                 ? userIsLoading
@@ -196,6 +256,10 @@ const LoginPage = () => {
           <p className="text-center mt-4">
             {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
             <Link
+              onClick={() => {
+                setInput(initialInputState);
+                setError(initialErrorState);
+              }}
               to={`?mode=${isLogin ? "signup" : "login"}`}
               className="text-blue-500 underline"
             >

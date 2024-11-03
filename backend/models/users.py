@@ -26,12 +26,17 @@ class User(db.Model):
     def get_user_by_email(cls, email):
         return cls.query.filter_by(email=email).first()
 
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "username": self.username,
+            "email": self.email
+        }
 
     def save(self):
         db.session.add(self)
         db.session.commit()
 
-    
     def delete(self):
         db.session.delete(self)
         db.session.commit()
