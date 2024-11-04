@@ -124,12 +124,12 @@ const LoginPage = () => {
   }, [navigate, userIsLoading]);
 
   return (
-    <div className="flex justify-center items-center mt-16">
+    <div className="flex justify-center items-center pt-6">
       <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-gray-100">
         <h2 className="text-3xl font-bold mb-6 text-blue-700">
           {isLogin ? "Welcome Back!" : "Create Your Account"}
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-2">
           <div>
             <label
               className="block text-gray-700 font-bold mb-2"

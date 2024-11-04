@@ -4,10 +4,10 @@ import MainNavigation from "../components/MainNavigation";
 const RootLayout = () => {
   return (
     <>
-      <div>
-        <MainNavigation />
+      <MainNavigation />
+      <div className="pt-20">
+        <Outlet />
       </div>
-      <Outlet />
     </>
   );
 };

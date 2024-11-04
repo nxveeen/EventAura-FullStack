@@ -1,5 +1,5 @@
 from extensions import db
-from uuid import uuid4  # use uuid4 for generating random UUIDs
+from uuid import uuid4  
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):

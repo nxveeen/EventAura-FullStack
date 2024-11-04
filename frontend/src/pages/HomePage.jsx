@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { getAllEvents } from "../store/EventStore";
 import { getUser, getUserAuthenticated, logout } from "../store/AuthStore";
-import { User } from "lucide-react";
+import Marquee from "../components/Marquee";
+import { Facebook, Instagram, Twitter } from "lucide-react";
+import Footer from "../components/Footer";
 
 const HomePage = () => {
   const allEvents = useSelector(getAllEvents);
@@ -10,42 +11,24 @@ const HomePage = () => {
   const currentUser = useSelector(getUser);
   const dispatch = useDispatch();
 
-  function handleLogout() {
-    dispatch(logout());
-    dispatch({ type: "RESET" });
-  }
-
   return (
-    <div className="flex flex-col justify-center items-center">
-      {isAuthenticated ? (
-        <div className="flex items-center my-2">
-          <p>
-            Welcome {currentUser.username} {currentUser.email}
-          </p>
-          <div className="group bg-slate-200 rounded-full p-1 ml-1 hover:cursor-pointer hover:bg-slate-300 ">
-            <User size={24} strokeWidth={2} absoluteStrokeWidth />
-          </div>
-        </div>
-      ) : (
-        <p>not Welcome</p>
-      )}
-      <p className="text-xl font-bold">HomePage</p>
-      <p>
-        Go to{" "}
-        <Link to="about" className="text-blue-400 underline">
-          about page
-        </Link>
-      </p>
-      {allEvents.map((event) => {
-        return <p key={event.id}>{event.name}</p>;
-      })}
-      <button
-        onClick={() => handleLogout()}
-        className="bg-slate-200 rounded-md px-2 py-1 mt-2 hover:cursor-pointer hover:bg-slate-300 font-semibold"
-      >
-        Logout
-      </button>
-    </div>
+    <>
+      <div className="h-screen w-full flex flex-col text-gray-800">
+        <section className="flex h-[500px] py-14 px-8 sm:px-12">
+          <h1 className="text-7xl font-extrabold leading-none sm:text-8xl tracking-tight">
+            Event
+            <span className="ml-1 relative bg-gradient-to-r from-blue-500 to-blue-400 text-transparent bg-clip-text tracking-tight">
+              Aura
+              <span className="absolute w-full bottom-[10px] left-0 border-b-4 border-dashed border-blue-400 sm:border-b-8"></span>
+            </span>
+          </h1>
+        </section>
+        <section className="w-full h-auto overflow-clip">
+          <Marquee speed={10} from={0} to={"-100%"} />
+        </section>
+      </div>
+      <Footer />
+    </>
   );
 };
 
