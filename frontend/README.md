@@ -130,7 +130,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## 👥 Authors
 
-- Your Name - [GitHub Profile](https://github.com/nxveeen)
+- nxveeen - [GitHub Profile](https://github.com/nxveeen)
 
 ## 🙏 Acknowledgments
 

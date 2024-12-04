@@ -1,6 +1,6 @@
 # EventAura Project
 
-This is a full-stack web application that includes a **Flask** backend and a **React** frontend (using Vite). The app allows for managing events, with separate interfaces for organizers and attendees.
+This is a full-stack web application that includes a **Flask** backend and a **React** frontend (using Vite and Redux-Toolkit). The app allows for managing events, with separate interfaces for organizers and attendees.
 
 ## Table of Contents
 
@@ -36,9 +36,30 @@ This is a full-stack web application that includes a **Flask** backend and a **R
 - Python 3.x installed (for the backend)
 - Virtual environment for Python (optional but recommended)
 
+### Frontend Setup (Reactjs + Redux)
+
+1. **Navigate to the Frontend Folder**
+
+```bash
+cd frontend
+
+npm install
+# or
+pnpm install
+
+npm run dev
+# or
+pnpm run dev
+```
+
 ### Backend Setup (Flask)
 
 1. **Navigate to the Backend Folder** (if applicable):
-   ```bash
-   cd backend
-   ```
+
+```bash
+cd backend
+
+flask run (debug = False)
+# or
+python app.py (debug = True)
+```
