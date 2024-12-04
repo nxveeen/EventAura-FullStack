@@ -7,11 +7,8 @@ This is a full-stack web application that includes a **Flask** backend and a **R
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
-- [Backend Setup (Flask)](#backend-setup-flask)
 - [Frontend Setup (React with Vite)](#frontend-setup-react-with-vite)
-- [Running the Application](#running-the-application)
-- [API Endpoints](#api-endpoints)
-- [Folder Structure](#folder-structure)
+- [Backend Setup (Flask)](#backend-setup-flask)
 
 ## Features
 
@@ -36,7 +33,7 @@ This is a full-stack web application that includes a **Flask** backend and a **R
 - Python 3.x installed (for the backend)
 - Virtual environment for Python (optional but recommended)
 
-### Frontend Setup (Reactjs + Redux)
+### Frontend Setup (Vite + Redux)
 
 1. **Navigate to the Frontend Folder**
 
@@ -54,7 +51,7 @@ pnpm run dev
 
 ### Backend Setup (Flask)
 
-1. **Navigate to the Backend Folder** (if applicable):
+2. **Navigate to the Backend Folder** (if applicable):
 
 ```bash
 cd backend
